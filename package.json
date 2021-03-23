@@ -1,0 +1,19 @@
+{
+  "name": "pkv-angular-index-transform",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@bitbucket.check24.de:7999/vvpkv/pkv-angular-index-transform.git"
+  },
+  "author": "Marlon Hänsdieke",
+  "license": "UNLICENSED",
+  "peerDependencies": {
+    "@angular-builders/custom-webpack": "^9.2.0",
+    "rc": "^1.2.8",
+    "inquirer": "^7.1.0"
+  }
+}
