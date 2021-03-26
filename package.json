@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@bitbucket.check24.de:7999/vvpkv/pkv-angular-index-transform.git"
+    "url": "ssh://git@github.com:dev-marlon/angular-custom-webpack-index-transform.git"
   },
   "author": "Marlon Hänsdieke",
   "license": "MIT",
