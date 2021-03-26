@@ -25,7 +25,7 @@ projects.<yourProjectName>.architect.serve.builder = "@angular-builders/custom-w
 ```
 Add indexTransform property
 ```bash
-projects.<yourProjectName>.architect.build.builder.options.indexTransform: "node_modules/angular-custom-webpack-index-transform/index.js"        
+projects.<yourProjectName>.architect.build.options.indexTransform: "node_modules/angular-custom-webpack-index-transform/index.js"        
 ```
 
 ### Add a npm script to package.json
