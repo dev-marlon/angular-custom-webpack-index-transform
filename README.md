@@ -27,17 +27,19 @@ Add indexTransform property
 ```bash
 projects.<yourProjectName>.architect.build.options.indexTransform: "node_modules/angular-custom-webpack-index-transform/index.js"        
 ```
+### Add a configuration file
 
-### Add a npm script to package.json
+Provide the path to the custom templates via a configuration file named `.indextransformrc`
 
-Provide the nodejs process variable `ANGULAR_CUSTOM_WEBPACK_INDEX_TRANSFORM` and assign it with the path to your custom html templates location path before calling the angular cli script.
-
-```bash
-scripts.<some-script-name> = "ANGULAR_CUSTOM_WEBPACK_INDEX_TRANSFORM='/src/custom-templates/' ng serve"
+```json
+// .indextransformrc
+{
+  "templatePath": "/path/to/templates/",
+  "target": "<target>" // The angular cli build target - optional, default is "serve"
+}
 ```
-
-Everytime you call the npm script, the index transform script will show u a list of available custom templates from the provided path.
+Everytime you call an angular cli builder script, the index transform script will show u a list of available custom templates from the provided path.
 
 ## Things to know
-- U have to provide the angular assets manually in each of your custom templates
-- Changes in the custom template wont bump an automatic rebuild because it cant be watched by the serve command right now.
+- U have to provide the angular assets manually in each of your custom templates.
+- Changes in the custom template won't bump an automatic rebuild because it can't be watched by the serve command right now.
