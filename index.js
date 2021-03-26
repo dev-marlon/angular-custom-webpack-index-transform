@@ -6,7 +6,9 @@ const util = require('util');
 const readdirAsync = util.promisify(fs.readdir);
 const readFileAsync = util.promisify(fs.readFile);
 
-const config = require('rc')('indextransform');
+const config = require('rc')('indextransform', {
+    target: 'serve'
+});
 
 /**
  * @param {{
@@ -18,7 +20,7 @@ const config = require('rc')('indextransform');
  * @return {Promise<string>}
  */
 module.exports = (targetOptions, indexHtml) => {
-    if (config.templatePath === undefined) {
+    if (config.templatePath === undefined || config.target !== targetOptions.target) {
         return Promise.resolve(indexHtml);
     }
 
