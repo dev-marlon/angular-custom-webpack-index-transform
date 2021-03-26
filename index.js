@@ -6,6 +6,8 @@ const util = require('util');
 const readdirAsync = util.promisify(fs.readdir);
 const readFileAsync = util.promisify(fs.readFile);
 
+const config = require('rc')('indextransform');
+
 /**
  * @param {{
  *  configuration?: string,
@@ -16,7 +18,7 @@ const readFileAsync = util.promisify(fs.readFile);
  * @return {Promise<string>}
  */
 module.exports = (targetOptions, indexHtml) => {
-    if (!process.env.ANGULAR_CUSTOM_WEBPACK_INDEX_TRANSFORM) {
+    if (config.templatePath === undefined) {
         return Promise.resolve(indexHtml);
     }
 
@@ -62,7 +64,7 @@ module.exports = (targetOptions, indexHtml) => {
  * @return {Promise<string[]>}
  */
 const retrieveTemplateFiles = async () => {
-    return await readdirAsync(`${process.cwd()}${process.env.ANGULAR_CUSTOM_WEBPACK_INDEX_TRANSFORM}`);
+    return await readdirAsync(`${process.cwd()}${config.templatePath}`);
 };
 
 /**
@@ -71,7 +73,7 @@ const retrieveTemplateFiles = async () => {
  */
 const retrieveTemplateFileContent = async templateFile => {
     return await readFileAsync(
-        `${process.cwd()}${process.env.ANGULAR_CUSTOM_WEBPACK_INDEX_TRANSFORM}${templateFile}`,
+        `${process.cwd()}${config.templatePath}${templateFile}`,
         'utf8'
     );
 };
