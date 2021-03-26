@@ -27,6 +27,7 @@ Add indexTransform property
 ```bash
 projects.<yourProjectName>.architect.build.options.indexTransform: "node_modules/angular-custom-webpack-index-transform/index.js"        
 ```
+
 ### Add a configuration file
 
 Provide the path to the custom templates via a configuration file named `.indextransformrc`
