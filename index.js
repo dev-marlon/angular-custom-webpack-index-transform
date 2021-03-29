@@ -20,7 +20,10 @@ const config = require('rc')('indextransform', {
  * @return {Promise<string>}
  */
 module.exports = (targetOptions, indexHtml) => {
-    if (config.templatePath === undefined || config.target !== targetOptions.target) {
+    if (
+        process.env.ANGULAR_CUSTOM_WEBPACK_INDEX_TRANSFORM_USE_DEFAULT
+        || config.templatePath === undefined
+        || config.target !== targetOptions.target) {
         return Promise.resolve(indexHtml);
     }
 
@@ -31,11 +34,9 @@ module.exports = (targetOptions, indexHtml) => {
     }
 
     return retrieveTemplateFiles().then((templateFiles) => {
-        if (templateFiles === null) {
-            return indexHtml;
-        }
-
-        if (Array.isArray(templateFiles) && templateFiles.length === 0) {
+        if (
+            templateFiles === null
+            || Array.isArray(templateFiles) && templateFiles.length === 0) {
             return indexHtml;
         }
 
@@ -47,12 +48,23 @@ module.exports = (targetOptions, indexHtml) => {
                     type: 'list',
                     name: 'template',
                     message: 'Choose template',
-                    choices: templateFiles,
+                    choices: [
+                        ...[{
+                            name: 'Use default index.html',
+                            value: 'default'
+                        }],
+                        new inquirer.Separator(),
+                        ...templateFiles
+                    ]
                 },
             ])
             .then((selection) => {
-                process.env.ANGULAR_CUSTOM_WEBPACK_INDEX_TRANSFORM_TEMPLATE = selection.template;
+                if (selection.template === 'default') {
+                    process.env.ANGULAR_CUSTOM_WEBPACK_INDEX_TRANSFORM_USE_DEFAULT = true;
+                    return indexHtml;
+                }
 
+                process.env.ANGULAR_CUSTOM_WEBPACK_INDEX_TRANSFORM_TEMPLATE = selection.template;
                 return retrieveTemplateFileContent(selection.template);
             })
             .catch((error) => {
